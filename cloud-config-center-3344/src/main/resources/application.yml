@@ -1,0 +1,35 @@
+server:
+  port: 3344
+spring:
+  application:
+    name: cloud-confog-center # 注册进Eureka服务器的微服务名
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/zchstart/springcloud-config.git # GitHub上的git仓库的名字
+          ### 搜索目录
+          search-paths:
+            - springcloud-config
+          #指定git仓库用户名密码，公开仓库可以不指定用户名密码，私有仓库需要指定
+        ### 读取分支
+        label: master
+  # rabbitmq相关配置(虚拟机docker)
+  rabbitmq:
+    host: 192.168.187.130
+    port: 5672
+    username: guest
+    password: guest
+
+# 服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+
+# rabbitmq相关配置，暴露bus刷新配置的端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'bus-refresh'
